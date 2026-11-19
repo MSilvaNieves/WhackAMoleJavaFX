@@ -1,0 +1,91 @@
+@startuml
+title Whack-a-Mole Class Diagram
+
+class Mole {
+  - row : int
+  - col : int
+  - visible : boolean
+  - visibleDurationMs : long
+  - hit : boolean
+  + Mole(row : int, col : int)
+  + appear(durationMs : long) : void
+  + hide() : void
+  + hit() : boolean
+  + isVisible() : boolean
+  + isExpired() : boolean
+  + getRow() : int
+  + getCol() : int
+}
+
+class Board {
+  - size : int
+  - moles : List<Mole>
+  - lastSpotIndex : int
+  - maxActiveMoles : int
+  + Board(size : int)
+  + setupBoard() : void
+  + resetBoard() : void
+  + chooseNextSpot() : int
+  + isOvercrowded() : boolean
+  + getActiveMoleCount() : int
+  + getMole(index : int) : Mole
+}
+
+class Player {
+  - name : String
+  - highScore : int
+  + Player(name : String)
+  + getName() : String
+  + setName(name : String) : void
+  + getHighScore() : int
+  + setHighScore(highScore : int) : void
+}
+
+class Game {
+  - score : int
+  - missCount : int
+  - maxMisses : int = 3
+  - timeRemaining : int
+  - running : boolean
+  + Game(board : Board, player : Player)
+  + startGame() : void
+  + countDownTimer() : void
+  + recordMiss() : void
+  + checkHit(spotIndex : int) : boolean
+  + endGame() : void
+  + getScore() : int
+  + getMissCount() : int
+  + getTimeRemaining() : int
+  + isRunning() : boolean
+}
+
+class Application <<javafx.application>> {
+}
+
+class App <<JavaFX>> {
+  - game : Game
+  - cells : List<StackPane>
+  - scoreLabel : Label
+  - timerLabel : Label
+  - missLabel : Label
+  - timeline : Timeline
+  + start(stage : Stage) : void
+  - buildBoardGrid() : GridPane
+  - buildInfoPanel() : VBox
+  - buildControls() : HBox
+  - updateDisplay() : void
+  - onCellClicked(index : int) : void
+  + main(args : String[]) : void
+}
+
+' Relationships
+Player "1" --> "1" Board : plays on
+Board "1" *-- "1..*" Mole : contains
+Game "1" *-- "1" Board : owns
+
+App "1" --> "1" Game : controls
+App ..> Player : displays
+App ..> Board : renders
+App --|> Application
+
+@enduml

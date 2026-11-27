@@ -70,6 +70,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.5</version>
                 <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
                     <systemPropertyVariables>
                         <glass.platform>Monocle</glass.platform>
                         <monocle.platform>Headless</monocle.platform>
@@ -108,15 +109,46 @@
                             </rules>
                         </configuration>
                     </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.11.2</version>
+                <executions>
                     <execution>
-                        <id>coverage-report</id>
-                        <phase>verify</phase>
+                        <id>site-javadoc</id>
+                        <phase>pre-site</phase>
                         <goals>
-                            <goal>report</goal>
+                            <goal>javadoc</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/site/reports/apidocs</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
+            </plugin>
         </plugins>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

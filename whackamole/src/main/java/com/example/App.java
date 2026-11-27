@@ -19,6 +19,9 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JavaFX user interface for playing Whack-a-Mole.
+ */
 public class App extends Application {
     private Game game;
     private final List<StackPane> cells = new ArrayList<>();
@@ -27,6 +30,11 @@ public class App extends Application {
     private Label missLabel;
     private Timeline timeline;
 
+    /**
+     * Creates and displays the game window.
+     *
+     * @param stage primary JavaFX window
+     */
     @Override
     public void start(Stage stage) {
         Player player = new Player("Player");
@@ -48,6 +56,11 @@ public class App extends Application {
         stage.show();
     }
 
+    /**
+     * Builds the grid of clickable board cells.
+     *
+     * @return the board grid
+     */
     private GridPane buildBoardGrid() {
         GridPane grid = new GridPane();
         grid.setHgap(8);
@@ -67,12 +80,22 @@ public class App extends Application {
         return grid;
     }
 
+    /**
+     * Builds the score, timer, and miss-count display.
+     *
+     * @return the information panel
+     */
     private VBox buildInfoPanel() {
         VBox panel = new VBox(5, scoreLabel, timerLabel, missLabel);
         panel.setAlignment(Pos.CENTER);
         return panel;
     }
 
+    /**
+     * Builds the controls used to start a game.
+     *
+     * @return the controls panel
+     */
     private HBox buildControls() {
         Button startButton = new Button("Start");
         startButton.setOnAction(event -> startGameTimeline());
@@ -81,6 +104,9 @@ public class App extends Application {
         return controls;
     }
 
+    /**
+     * Resets the game and starts its repeating timer and mole updates.
+     */
     private void startGameTimeline() {
         if (timeline != null) {
             timeline.stop();
@@ -100,6 +126,9 @@ public class App extends Application {
         timeline.play();
     }
 
+    /**
+     * Selects a board spot and displays its mole when the game is running.
+     */
     private void showNextMole() {
         if (!game.isRunning()) {
             if (timeline != null) {
@@ -122,12 +151,20 @@ public class App extends Application {
         }
     }
 
+    /**
+     * Refreshes the labels to reflect the current game state.
+     */
     private void updateDisplay() {
         scoreLabel.setText("Score: " + game.getScore());
         timerLabel.setText("Time: " + game.getTimeRemaining());
         missLabel.setText("Misses: " + game.getMissCount());
     }
 
+    /**
+     * Processes a click on a board cell as a hit or a miss.
+     *
+     * @param index zero-based board spot index
+     */
     private void onCellClicked(int index) {
         if (!game.isRunning()) {
             return;
@@ -142,6 +179,11 @@ public class App extends Application {
         updateDisplay();
     }
 
+    /**
+     * Starts the JavaFX application.
+     *
+     * @param args command-line arguments passed to JavaFX
+     */
     public static void main(String[] args) {
         launch(args);
     }

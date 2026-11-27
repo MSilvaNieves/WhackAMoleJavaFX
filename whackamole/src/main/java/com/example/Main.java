@@ -1,6 +1,14 @@
 package com.example;
 
+/**
+ * Runs a console demonstration of the Whack-a-Mole game model.
+ */
 public class Main {
+    /**
+     * Creates a game, demonstrates a hit and miss, and prints the resulting state.
+     *
+     * @param args command-line arguments (unused)
+     */
     public static void main(String[] args) {
         Player player = new Player("Java Player");
         Board board = new Board(3);

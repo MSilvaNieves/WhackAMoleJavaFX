@@ -1,7 +1,7 @@
 {
     "java.import.maven.enabled": true,
+    "java.configuration.updateBuildConfiguration": "automatic",
     "java.maven.downloadSources": true,
-    "java.jdt.ls.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-17.0.7.7-hotspot",
     "java.configuration.runtimes": [
         {
             "name": "JavaSE-17",
